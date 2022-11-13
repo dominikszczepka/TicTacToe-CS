@@ -8,10 +8,15 @@ namespace TicTacToe
 {
     public class ResolveChecker
     {
-        public bool IsRunning(Board board)
+        private Board _board;
+        public ResolveChecker (Board board)
         {
-            board.IsGameFinished = false;
-            board.IsDraw = false;
+            _board = board;
+        }
+        public bool IsRunning()
+        {
+            _board.IsGameFinished = false;
+            _board.IsDraw = false;
             List<string> results = new List<string>();
             bool tmpisSpace = false;
             string tmpString;
@@ -21,7 +26,7 @@ namespace TicTacToe
                 tmpString = "";
                 for (int j = 0; j < Board.Length; j++)
                 {
-                    tmpString += board.BoardElements[i, j];
+                    tmpString += _board.BoardElements[i, j];
                 }
                 results.Add(tmpString);
             }
@@ -31,19 +36,19 @@ namespace TicTacToe
                 tmpString = "";
                 for (int j = 0; j < Board.Length; j++)
                 {
-                    tmpString += board.BoardElements[j, i];
+                    tmpString += _board.BoardElements[j, i];
                 }
                 results.Add(tmpString);
             }
 
             tmpString = "";
             for (int i = 0; i < Board.Length; i++)
-                tmpString += board.BoardElements[i, i];
+                tmpString += _board.BoardElements[i, i];
             results.Add(tmpString);
 
             tmpString = "";
             for (int i = 0; i < Board.Length; i++)
-                tmpString += board.BoardElements[i, Board.Length - 1 - i];
+                tmpString += _board.BoardElements[i, Board.Length - 1 - i];
             results.Add(tmpString);
 
             // check if there is any space left
@@ -55,21 +60,21 @@ namespace TicTacToe
             // game ended
             if (results.Contains("XXX") || results.Contains("OOO"))
             {
-                board.WhoWon = results.Contains("XXX") ? "X" : "O";
-                board.IsGameFinished = true;
+                _board.WhoWon = results.Contains("XXX") ? "X" : "O";
+                _board.IsGameFinished = true;
                 return false;
             }
             // draw
             else if (!tmpisSpace)
             {
-                board.WhoWon = "Draw";
-                board.IsDraw = true;
-                board.IsGameFinished = true;
+                _board.WhoWon = "Draw";
+                _board.IsDraw = true;
+                _board.IsGameFinished = true;
                 return false;
             }
             else
             {
-                board.WhoWon = "";
+                _board.WhoWon = "";
                 return true;
             }
         }

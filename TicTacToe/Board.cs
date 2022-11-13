@@ -9,9 +9,9 @@ namespace TicTacToe
 {
     public class Board
     {
-        private ResolveChecker resolveChecker = new ResolveChecker();
+        private ResolveChecker resolveChecker;
         private MoveMaker moveMaker;
-        private BoardDisplay display = new BoardDisplay();
+        private BoardDisplay display;
         private AI ai;
         public bool IsSinglePlayer { get; set; }
         public bool Player1Turn { get; set; }
@@ -24,6 +24,8 @@ namespace TicTacToe
         public Board()
         {
             moveMaker = new MoveMaker(this);
+            display = new BoardDisplay(this);
+            resolveChecker = new ResolveChecker(this);
             Length = 3;
             BoardElements = new string[Length, Length];
             BoardReset();
@@ -45,12 +47,12 @@ namespace TicTacToe
         }
         public void DoAiMove()
         {
-            if (ai == null) ai = new AI(this);
+
             ai.DoBestMove();
         }
         private void GetSettings()
         {
-            string answer;
+            string? answer;
             do
             {
                 Console.WriteLine("Type for 1 single player mode or 2 for multiplayer mode");
@@ -76,7 +78,7 @@ namespace TicTacToe
         }
         public bool IsRunning()
         {
-            return resolveChecker.IsRunning(this);
+            return resolveChecker.IsRunning();
         }
         public void FinishGame()
         {
@@ -96,7 +98,7 @@ namespace TicTacToe
         }
         public void DrawBoard()
         {
-            display.DrawBoard(BoardElements);
+            display.DrawBoard();
         }
 
         private bool IsPositionValid(string pos)

@@ -8,14 +8,19 @@ namespace TicTacToe
 {
     internal class BoardDisplay
     {
-        public void DrawBoard(String[,] BoardElements)
+        private Board _board;
+        public BoardDisplay(Board board)
+        {
+            _board = board;
+        }
+        public void DrawBoard()
         {
             Console.WriteLine("  1 2 3");
-            Console.WriteLine("A " + BoardElements[0, 0] + "|" + BoardElements[0, 1] + "|" + BoardElements[0, 2]);
+            Console.WriteLine("A " + _board.BoardElements[0, 0] + "|" + _board.BoardElements[0, 1] + "|" + _board.BoardElements[0, 2]);
             Console.WriteLine("  -----");
-            Console.WriteLine("B " + BoardElements[1, 0] + "|" + BoardElements[1, 1] + "|" + BoardElements[1, 2]);
+            Console.WriteLine("B " + _board.BoardElements[1, 0] + "|" + _board.BoardElements[1, 1] + "|" + _board.BoardElements[1, 2]);
             Console.WriteLine("  -----");
-            Console.WriteLine("C " + BoardElements[2, 0] + "|" + BoardElements[2, 1] + "|" + BoardElements[2, 2]);
+            Console.WriteLine("C " + _board.BoardElements[2, 0] + "|" + _board.BoardElements[2, 1] + "|" + _board.BoardElements[2, 2]);
         }
     }
 }
