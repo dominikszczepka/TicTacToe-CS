@@ -6,12 +6,47 @@ using System.Threading.Tasks;
 
 namespace TicTacToe
 {
-    public class ResolveChecker
+    public class GameResolver
     {
-        private Board _board;
-        public ResolveChecker (Board board)
+        private readonly Board _board;
+        private readonly GameHandler _gameHandler;
+        public GameResolver (Board board, GameHandler gameHandler)
         {
             _board = board;
+            _gameHandler = gameHandler;
+        }
+
+        public void FinishGame()
+        {
+            _gameHandler.DrawBoard();
+            if (_board.IsDraw)
+            {
+                Console.WriteLine("It's a draw!");
+            }
+            // if next turn should be for player1, but game ended, player 2 won
+            else
+                Console.WriteLine((_board.WhoWon.Equals("O") ? "Player1" : "Player2") + " won the game!");
+
+            if (!WillPlayAgain())
+            {
+                Console.WriteLine("Thank you for playing!");
+            }
+        }
+        private bool WillPlayAgain()
+        {
+            string answer;
+            do
+            {
+                Console.WriteLine("Do you want to play again? Type yes or no");
+                answer = Console.ReadLine();
+            } while (!answer.Equals("yes") && !answer.Equals("no"));
+            if (answer.Equals("yes"))
+            {
+                _gameHandler.GameReset();
+                return true;
+            }
+            else
+                return false;
         }
         public bool IsRunning()
         {

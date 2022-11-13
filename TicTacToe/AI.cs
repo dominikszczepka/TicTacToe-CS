@@ -10,8 +10,14 @@ namespace TicTacToe
     {
         private string sign;
         private Board _board;
+        private readonly GameHandler _gameHandler;
 
-        public AI(Board board)
+        public AI(Board board,GameHandler gameHandler)
+        {
+            _gameHandler = gameHandler;
+            ResetAI(board);
+        }
+        public void ResetAI(Board board)
         {
             _board = board;
             sign = board.Player1Turn ? "X" : "O";
@@ -24,7 +30,7 @@ namespace TicTacToe
         private int Minimax(int depth, bool maxPlayer)
         {
             string otherSign = sign.Equals("O") ? "X" : "O";
-            if (!_board.IsRunning())
+            if (!_gameHandler.IsRunning())
             {
                 switch (_board.WhoWon)
                 {

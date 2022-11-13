@@ -8,10 +8,21 @@ namespace TicTacToe
 {
     public class MoveMaker
     {
-        private Board _board;
-        public MoveMaker(Board board)
+        private readonly Board _board;
+        private readonly GameHandler _gameHandler;
+        public MoveMaker(Board board, GameHandler gameHandler)
         {
             _board = board;
+            _gameHandler = gameHandler;
+        }
+        public string GetPosition()
+        {
+            string position;
+            do
+            {
+                position = Console.ReadLine();
+            } while (!_board.IsPositionValid(position));
+            return position;
         }
         public void MakeMove()
         {
@@ -20,24 +31,24 @@ namespace TicTacToe
             {
                 if (!_board.Player1Turn)
                 {
-                    _board.DoAiMove();
-                    _board.DrawBoard();
+                    _gameHandler.DoAiMove();
+                    _gameHandler.DrawBoard();
                 }
 
-                if (_board.Player1Turn || !_board.Player1Turn && _board.IsRunning())
+                if (_board.Player1Turn || !_board.Player1Turn && _gameHandler.IsRunning())
                 {
                     Console.WriteLine("Please make your next move");
-                    UpdatePositionOnBoard(_board.GetPosition());
+                    UpdatePositionOnBoard(_gameHandler.GetPosition());
                 }
 
-                if (_board.Player1Turn && _board.IsRunning())
-                    _board.DoAiMove();
+                if (_board.Player1Turn && _gameHandler.IsRunning())
+                    _gameHandler.DoAiMove();
             }
 
             else
             {
                 Console.WriteLine((_board.Player1Turn ? "Player1" : "Player2") + " please make your next move");
-                UpdatePositionOnBoard(_board.GetPosition());
+                UpdatePositionOnBoard(_gameHandler.GetPosition());
                 _board.Player1Turn = !_board.Player1Turn;
             }
         }

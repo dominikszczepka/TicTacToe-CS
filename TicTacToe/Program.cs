@@ -1,9 +1,9 @@
 ﻿using TicTacToe;
 
-Board board = new Board();
-while (board.IsRunning())
+GameHandler gameHandler = new GameHandler();
+while (gameHandler.IsRunning())
 {
-    board.DrawBoard();
-    board.MakeMove();
-    if (!board.IsRunning()) board.FinishGame();
+    gameHandler.DrawBoard();
+    gameHandler.MakeMove();
+    if (!gameHandler.IsRunning()) gameHandler.FinishGame();
 }
